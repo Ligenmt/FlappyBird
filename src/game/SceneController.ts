@@ -43,6 +43,7 @@ class SceneController {
             stage.removeChild(this.instance.startScene)
             this.instance.startScene = new StartScene()
         }
+
         //数据初始化
         GameData.distance = 0
         GameData.barrierCount = 0
@@ -56,6 +57,19 @@ class SceneController {
     }
 
     private static loadLevelData() {
+        // let levelData = RES.getRes("config_json")
+        // GameData.elements = levelData.elements
+    }
+
+    //游戏开始
+    public static startGame() {
+        GameData.hasStart = true
+        this.instance.gameScene.startGame()
+        //定时器开始
+        this.instance.gameScene.startTicker()
+    }
+
+    static gameEnd() {
 
     }
 }

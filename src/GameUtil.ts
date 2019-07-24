@@ -11,8 +11,11 @@ class GameUtil {
      */
     public static createBitmapByName(name: string) {
         let result = new egret.Bitmap();
-        let texture: egret.Texture = RES.getRes(name);
+        // let texture: egret.Texture = RES.getRes(name);
+        let res:egret.SpriteSheet = RES.getRes("flappybirdres_json")
+        let texture: egret.Texture = res.getTexture(name);
         result.texture = texture;
         return result;
     }
+
 }
