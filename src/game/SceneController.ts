@@ -10,11 +10,12 @@ class SceneController {
 
     private startScene:StartScene
     private gameScene:GameScene
-    private overScene
+    private gameOverScene:GameOverScene
 
     public constructor() {
         this.startScene = new StartScene()
         this.gameScene = new GameScene()
+        this.gameOverScene = new GameOverScene()
     }
 
     static get instance() {
@@ -32,6 +33,14 @@ class SceneController {
     static initGame() {
         let stage = this.instance._stage
         //todo ...
+        if( this.instance.gameScene.parent){
+            stage.removeChild( this.instance.gameScene );
+            this.instance.gameScene = new GameScene();
+        }
+        if (this.instance.gameOverScene.parent) {
+            stage.removeChild(this.instance.gameOverScene)
+            this.instance.gameOverScene = new GameOverScene()
+        }
 
         stage.addChild(this.instance.startScene)
     }
@@ -43,6 +52,15 @@ class SceneController {
             stage.removeChild(this.instance.startScene)
             this.instance.startScene = new StartScene()
         }
+        if( this.instance.gameScene.parent){
+            stage.removeChild( this.instance.gameScene );
+            this.instance.gameScene = new GameScene();
+        }
+        if (this.instance.gameOverScene.parent) {
+            stage.removeChild(this.instance.gameOverScene)
+            this.instance.gameOverScene = new GameOverScene()
+        }
+
 
         //数据初始化
         GameData.distance = 0
@@ -52,7 +70,6 @@ class SceneController {
         this.loadLevelData()
         //障碍物的位置
         // GameData.elements = GameData.elements.concat()
-
         stage.addChild(this.instance.gameScene)
     }
 
@@ -70,6 +87,8 @@ class SceneController {
     }
 
     static gameEnd() {
-
+        GameData.hasStart = false;
+        this.instance.gameScene.stopTicker();
+        this.instance._stage.addChild(this.instance.gameOverScene)
     }
 }

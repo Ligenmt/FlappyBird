@@ -15,6 +15,8 @@ class GameScene extends egret.DisplayObjectContainer {
     startGameContainer:egret.DisplayObjectContainer//开始游戏层
 
     private initView() {
+
+        this.touchEnabled = true
         let bg = GameUtil.createBitmapByName("bg_day");
         this.addChild(bg);
         let stageW = this.stage.stageWidth;
@@ -38,6 +40,8 @@ class GameScene extends egret.DisplayObjectContainer {
         this.initUIContainer()
         this.createPlayer()
         this.createLand()
+
+
     }
 
     //游戏准备层
@@ -93,24 +97,24 @@ class GameScene extends egret.DisplayObjectContainer {
     private createLand() {
         let land1 = GameUtil.createBitmapByName("land")
         this.land1 = land1
-        land1.y = this.stage.stageHeight - land1.height + 20
+        land1.y = this.stage.stageHeight - land1.height
         this.mileageContainer.addChild(land1)
 
         let land2 = GameUtil.createBitmapByName("land")
         this.land2 = land2
-        land2.y = this.stage.stageHeight - land2.height + 20
+        land2.y = this.stage.stageHeight - land2.height
         land2.x = land1.width
         this.mileageContainer.addChild(land2)
 
         let land3 = GameUtil.createBitmapByName("land")
         this.land3 = land3
-        land3.y = this.stage.stageHeight - land3.height + 20
+        land3.y = this.stage.stageHeight - land3.height
         land3.x = land1.width + land2.width
         this.mileageContainer.addChild(land3)
 
         GameData.landWidth = land1.width
         GameData.landHeight = land1.y
-
+        console.log("landHeight", GameData.landHeight)
         // egret.ticker.$startTick(this.update, this)
     }
 
@@ -157,7 +161,9 @@ class GameScene extends egret.DisplayObjectContainer {
             return
         }
         //点击跳跃
-        GameData.player.jump()
+        if (GameData.isAlive) {
+            GameData.player.jump()
+        }
     }
 
     startGame() {
@@ -168,11 +174,12 @@ class GameScene extends egret.DisplayObjectContainer {
         // })
     }
 
-    private update(timeStep:number):boolean {
+    pipeCreatorIndex = 0
 
-        // if (!GameData.hasStart) {
-        //     return true
-        // }
+    private update(timeStep:number):boolean {
+        if (!GameData.hasStart) {
+            return true
+        }
         //地面滚动
         if (this.land1.x + this.land1.width <= 0) {
             this.land1.x = this.land2.x + this.land2.width * 2
@@ -188,6 +195,34 @@ class GameScene extends egret.DisplayObjectContainer {
         this.land3.x -= GameData.speed
         GameData.distance += GameData.speed
         GameData.player.update(timeStep)
+
+        this.pipeUpdate(timeStep)
+        this.collisionDetect()
         return true
+    }
+
+    private pipeArray:Array<Pipe> = new Array<Pipe>()
+
+    private pipeUpdate(timeStep) {
+        this.pipeCreatorIndex += 1
+        if (this.pipeCreatorIndex % 100 == 0) {
+            let pipe = new Pipe()
+            this.pipeArray.push(pipe)
+            this.barrierContainer.addChild(pipe)
+            this.pipeCreatorIndex = 0
+            if (this.pipeArray.length >= 10) {
+                this.pipeArray.shift()
+            }
+            console.log("pipe size", this.pipeArray.length)
+        }
+        for (let p of this.pipeArray) {
+            p.update(timeStep)
+
+        }
+
+    }
+
+    private collisionDetect() {
+
     }
 }

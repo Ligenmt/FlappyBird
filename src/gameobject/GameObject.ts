@@ -6,7 +6,7 @@ class GameObject extends egret.DisplayObjectContainer {
 
     public hasTrigger:boolean //是否碰撞
 
-    update(timeStamp:number) {
+    update(timeStep:number) {
 
     }
 

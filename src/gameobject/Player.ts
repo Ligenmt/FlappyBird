@@ -12,10 +12,10 @@ class Player extends GameObject{
     private _acc:number = 0
 
     private init() {
-        this._bird = GameUtil.createBitmapByName("bird0_1")
+        this._bird = GameUtil.createBitmapByName("bird0_0")
         this.addChild(this._bird)
 
-        this._jump = GameUtil.createBitmapByName("bird0_0")
+        this._jump = GameUtil.createBitmapByName("bird0_1")
         this._jump.visible = false
         this.addChild(this._jump)
 
@@ -39,6 +39,7 @@ class Player extends GameObject{
     }
 
     public death(isLanding:boolean=false) {
+        console.log("death")
         GameData.isAlive = false
         if (!isLanding) {
             this._death.x = (this.width - this._jump.width) / 2
@@ -51,13 +52,18 @@ class Player extends GameObject{
     }
 
     update(timeStamp:number) {
-        this.y += this._acc
-        this._acc += GameData.gravity
-        
-        if (this.y + this._bird.height > GameData.landHeight) {
-            this.death(true)
-            SceneController.gameEnd()
+
+        if (GameData.isAlive) {
+            this.y += this._acc
+            this._acc += GameData.gravity
+
+            if (this.y + this._bird.height > GameData.landHeight) {
+                console.log()
+                this.death(true)
+                SceneController.gameEnd()
+            }
         }
+
     }
 
     //计算玩家高度时，只计算鸟本身
