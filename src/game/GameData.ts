@@ -5,6 +5,7 @@ class GameData {
     static isPause:boolean = false
     static distance:number = 0
     static barrierCount:number = 0
+    static score:number = 0
     static eggCount:number = 0
     static isAlive:boolean = true
     static landWidth: number;

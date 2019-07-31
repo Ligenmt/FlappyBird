@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_png,bg_jpg,egret_icon_png,description_json,button_play_png,land_png,flappybirdres_json",
+			"keys": "bg_png,bg_jpg,egret_icon_png,description_json,button_play_png,land_png,flappybirdres_json,pipe_up_2x_png,pipe_down_2x_png",
 			"name": "preload"
 		}
 	],
@@ -41,6 +41,16 @@
 			"type": "sheet",
 			"name": "flappybirdres_json",
 			"subkeys": "bg_day,bg_night,bird0_0,bird0_1,bird0_2,bird1_0,bird1_1,bird1_2,bird2_0,bird2_1,bird2_2,black,blink_00,blink_01,blink_02,brand_copyright,button_menu,button_ok,button_pause,button_play,button_rate,button_resume,button_score,button_share,font_1,font_2,font_3,font_4,font_5,font_6,font_7,font_8,font_9,land,new,number_context_00,number_context_01,number_context_02,number_context_03,number_context_04,number_context_05,number_context_06,number_context_07,number_context_08,number_context_09,number_context_10,number_score_00,number_score_01,number_score_02,number_score_03,number_score_04,number_score_05,number_score_06,number_score_07,number_score_08,number_score_09,pipe2_down,pipe2_up,pipe_down,pipe_up,score_panel,text_game_over,text_ready,title,tutorial,white"
+		},
+		{
+			"url": "assets/pipe_up_2x.png",
+			"type": "image",
+			"name": "pipe_up_2x_png"
+		},
+		{
+			"url": "assets/pipe_down_2x.png",
+			"type": "image",
+			"name": "pipe_down_2x_png"
 		}
 	]
 }

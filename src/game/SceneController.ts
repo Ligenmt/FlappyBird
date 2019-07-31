@@ -65,6 +65,7 @@ class SceneController {
         //数据初始化
         GameData.distance = 0
         GameData.barrierCount = 0
+        GameData.score = 0
         GameData.eggCount = 0
         GameData.isAlive = true
         this.loadLevelData()

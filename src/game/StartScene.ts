@@ -10,7 +10,7 @@ class StartScene extends egret.DisplayObjectContainer {
 
     private initView() {
         //背景
-        let background = GameUtil.createBitmapByName("bg_day");
+        let background = GameUtil.createBitmapFromSheetByName("bg_day");
         this.addChild(background);
         let stageW = this.stage.stageWidth;
         let stageH = this.stage.stageHeight;
@@ -18,7 +18,7 @@ class StartScene extends egret.DisplayObjectContainer {
         background.height = stageH;
 
         //开始按钮
-        let startBtn = GameUtil.createBitmapByName("button_play");
+        let startBtn = GameUtil.createBitmapFromSheetByName("button_play");
         this.addChild(startBtn);
         startBtn.x = (this.stage.stageWidth-startBtn.width)/2;
         startBtn.y = (this.stage.stageHeight-startBtn.height)/2;

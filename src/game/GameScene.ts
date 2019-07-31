@@ -14,10 +14,12 @@ class GameScene extends egret.DisplayObjectContainer {
     mileageContainer:egret.DisplayObjectContainer//地面层
     startGameContainer:egret.DisplayObjectContainer//开始游戏层
 
+    scoreText:egret.TextField
+
     private initView() {
 
         this.touchEnabled = true
-        let bg = GameUtil.createBitmapByName("bg_day");
+        let bg = GameUtil.createBitmapFromSheetByName("bg_day");
         this.addChild(bg);
         let stageW = this.stage.stageWidth;
         let stageH = this.stage.stageHeight;
@@ -57,7 +59,7 @@ class GameScene extends egret.DisplayObjectContainer {
         this.startGameContainer.addChild(readyText)
 
         //小手
-        // let hand:egret.Bitmap = GameUtil.createBitmapByName("")
+        // let hand:egret.Bitmap = GameUtil.createBitmapFromSheetByName("")
 
         //点击开始游戏
         let startText:egret.TextField = new egret.TextField()
@@ -80,12 +82,12 @@ class GameScene extends egret.DisplayObjectContainer {
         tip1.y = 20
         this.UIContainer.addChild(tip1)
 
-        let barrierText = new egret.TextField()
-        barrierText.size = 60
-        barrierText.x = tip1.width + 20
-        barrierText.y = 20
-        this.UIContainer.addChild(barrierText)
-        this.changeBarriersCount(0)
+        this.scoreText = new egret.TextField()
+        this.scoreText.size = 60
+        this.scoreText.x = tip1.width + 60
+        this.scoreText.y = 20
+        this.UIContainer.addChild(this.scoreText)
+        this.changeScore(0)
 
     }
 
@@ -95,18 +97,18 @@ class GameScene extends egret.DisplayObjectContainer {
 
     //创建地面
     private createLand() {
-        let land1 = GameUtil.createBitmapByName("land")
+        let land1 = GameUtil.createBitmapFromSheetByName("land")
         this.land1 = land1
         land1.y = this.stage.stageHeight - land1.height
         this.mileageContainer.addChild(land1)
 
-        let land2 = GameUtil.createBitmapByName("land")
+        let land2 = GameUtil.createBitmapFromSheetByName("land")
         this.land2 = land2
         land2.y = this.stage.stageHeight - land2.height
         land2.x = land1.width
         this.mileageContainer.addChild(land2)
 
-        let land3 = GameUtil.createBitmapByName("land")
+        let land3 = GameUtil.createBitmapFromSheetByName("land")
         this.land3 = land3
         land3.y = this.stage.stageHeight - land3.height
         land3.x = land1.width + land2.width
@@ -136,8 +138,9 @@ class GameScene extends egret.DisplayObjectContainer {
         }
     }
 
-    private changeBarriersCount(number: number) {
-
+    private changeScore(number: number) {
+        GameData.score = number
+        this.scoreText.text = number + ""
     }
 
     private createPlayer() {
@@ -148,7 +151,7 @@ class GameScene extends egret.DisplayObjectContainer {
     }
 
     private onClickView() {
-        console.log("onClickView")
+        // console.log("onClickView")
         if (!GameData.hasStart && !GameData.isAlive) {
             console.log("onClickView startGameScene")
             SceneController.startGameScene();
@@ -217,7 +220,11 @@ class GameScene extends egret.DisplayObjectContainer {
         }
         for (let p of this.pipeArray) {
             p.update(timeStep)
-
+            if (p.pipeUp.x <= GameData.player.x && !p.scored) {
+                p.scored = true
+                this.changeScore(GameData.score + 1)
+                console.log("score:", GameData.score)
+            }
         }
 
     }

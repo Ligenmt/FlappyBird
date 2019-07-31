@@ -12,14 +12,14 @@ class Player extends GameObject{
     private _acc:number = 0
 
     private init() {
-        this._bird = GameUtil.createBitmapByName("bird0_0")
+        this._bird = GameUtil.createBitmapFromSheetByName("bird0_0")
         this.addChild(this._bird)
 
-        this._jump = GameUtil.createBitmapByName("bird0_1")
+        this._jump = GameUtil.createBitmapFromSheetByName("bird0_1")
         this._jump.visible = false
         this.addChild(this._jump)
 
-        this._death = GameUtil.createBitmapByName("bird0_2")
+        this._death = GameUtil.createBitmapFromSheetByName("bird0_2")
         this._death.visible = false
         this.addChild(this._death)
 
