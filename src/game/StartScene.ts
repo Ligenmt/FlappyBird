@@ -24,6 +24,10 @@ class StartScene extends egret.DisplayObjectContainer {
         startBtn.y = (this.stage.stageHeight-startBtn.height)/2;
         startBtn.touchEnabled = true
         startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.startGame, this)
+
+
+        let pipe = new Pipe()
+        this.addChild(pipe)
     }
 
     private startGame() {

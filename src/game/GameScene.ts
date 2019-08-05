@@ -151,17 +151,20 @@ class GameScene extends egret.DisplayObjectContainer {
     }
 
     private onClickView() {
-        // console.log("onClickView")
+        console.log("onClickView")
         if (!GameData.hasStart && !GameData.isAlive) {
             console.log("onClickView startGameScene")
-            SceneController.startGameScene();
+            // SceneController.startGameScene();
             return
         }
-        //第一次点击
-        if (!GameData.hasStart) {
+        //点击准备层
+        if (this.startGameContainer.visible) {
             console.log("onClickView startGame")
             SceneController.startGame()
             return
+        }
+        if (!GameData.hasStart) {
+
         }
         //点击跳跃
         if (GameData.isAlive) {
@@ -172,9 +175,6 @@ class GameScene extends egret.DisplayObjectContainer {
     startGame() {
         console.log("点击了界面，准备开始游戏");
         this.startGameContainer.visible = false
-        // egret.Tween.get(this.platformBird).to({}, 300).call(()=>{
-        //     this.roleContainer.removeChild(this.platformBird)
-        // })
     }
 
     pipeCreatorIndex = 0
@@ -208,7 +208,7 @@ class GameScene extends egret.DisplayObjectContainer {
 
     private pipeUpdate(timeStep) {
         this.pipeCreatorIndex += 1
-        if (this.pipeCreatorIndex % 100 == 0) {
+        if (this.pipeCreatorIndex % 150 == 0) {
             let pipe = new Pipe()
             this.pipeArray.push(pipe)
             this.barrierContainer.addChild(pipe)
@@ -229,7 +229,24 @@ class GameScene extends egret.DisplayObjectContainer {
 
     }
 
+    /**
+     * 碰撞检测
+     */
     private collisionDetect() {
+        let player:Player = GameData.player
+        let playerRect:egret.Rectangle = new egret.Rectangle(player.x,player.y,player.width,player.height);
+        for (let pipe of this.pipeArray) {
+            let upRect:egret.Rectangle = //pipe.pipeUp.getBounds()
+                new egret.Rectangle(pipe.pipeUp.x,pipe.pipeUp.y-pipe.pipeUp.height,pipe.pipeUp.width,pipe.pipeUp.height)
+            let downRect:egret.Rectangle = //pipe.pipeDown.getBounds(null, true)
+                new egret.Rectangle(pipe.pipeDown.x, pipe.pipeDown.y-pipe.pipeDown.height,pipe.pipeDown.width, pipe.pipeDown.height)
+            if (playerRect.intersects(upRect) || playerRect.intersects(downRect)) {
+                console.log(playerRect.intersects(upRect), playerRect.intersects(downRect))
+                GameData.player.death()
+                SceneController.gameEnd()
+            }
+        }
+
 
     }
 }

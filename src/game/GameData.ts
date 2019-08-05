@@ -11,9 +11,9 @@ class GameData {
     static landWidth: number;
     static landHeight: number;
     static speed: number = 2;
-    static jumpSpeed:number = 4
+    static jumpSpeed:number = 5
     static hasStart: boolean;
-    static gravity: number = 0.2;
+    static gravity: number = 0.3;
 
     static player:Player
 

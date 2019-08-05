@@ -14,7 +14,6 @@ class Player extends GameObject{
     private init() {
         this._bird = GameUtil.createBitmapFromSheetByName("bird0_0")
         this.addChild(this._bird)
-
         this._jump = GameUtil.createBitmapFromSheetByName("bird0_1")
         this._jump.visible = false
         this.addChild(this._jump)
@@ -22,7 +21,11 @@ class Player extends GameObject{
         this._death = GameUtil.createBitmapFromSheetByName("bird0_2")
         this._death.visible = false
         this.addChild(this._death)
-
+        let s = new egret.Sprite()
+        s.graphics.beginFill(0x666666, 0.2)
+        s.graphics.drawRect(0, 0, this.width, this.height)
+        s.graphics.endFill()
+        this.addChild(s)
     }
 
     public jump() {
@@ -42,12 +45,12 @@ class Player extends GameObject{
         console.log("death")
         GameData.isAlive = false
         if (!isLanding) {
-            this._death.x = (this.width - this._jump.width) / 2
-            this._death.y = - this._death.height
-            this._death.visible = true
-            egret.setTimeout(()=>{
-                this._death.visible = false
-            }, this, 2000)
+            // this._death.x = (this.width - this._jump.width) / 2
+            // this._death.y = - this._death.height
+            // this._death.visible = true
+            // egret.setTimeout(()=>{
+            //     this._death.visible = false
+            // }, this, 2000)
         }
     }
 
@@ -56,9 +59,7 @@ class Player extends GameObject{
         if (GameData.isAlive) {
             this.y += this._acc
             this._acc += GameData.gravity
-
             if (this.y + this._bird.height > GameData.landHeight) {
-                console.log()
                 this.death(true)
                 SceneController.gameEnd()
             }
